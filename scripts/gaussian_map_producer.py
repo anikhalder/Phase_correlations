@@ -35,19 +35,19 @@ lmax = 3*NSIDE-1
 
 map_type = 'gaussian'
 
-createFolder('./simulations_output/'+map_type+'_maps_healpy/')
+createFolder('./simulations_output/'+map_type+'_maps/')
 
 for j in range(maps_count):    
     print('Gaussian Map # ',str(j+1))
     np.random.seed(rndseed+j)
     density_field = hp.synfast(cl, NSIDE)
-    hp.write_map('./simulations_output/'+map_type+'_maps_healpy/'+map_type+'_map_'+str(j+1)+'.fits', density_field, overwrite='true')
+    hp.write_map('./simulations_output/'+map_type+'_maps/'+map_type+'_map_'+str(j+1)+'.fits', density_field, overwrite='true')
 
     recov_alm = hp.sphtfunc.map2alm(density_field, lmax=lmax)
     recovCls = hp.sphtfunc.anafast(density_field, lmax=lmax)
 
-    np.savetxt('./simulations_output/'+map_type+'_maps_healpy/recov_alm_'+str(j+1)+'.dat', recov_alm.T)
-    np.savetxt('./simulations_output/'+map_type+'_maps_healpy/recovCls_'+str(j+1)+'.dat', recovCls.T)
+    np.savetxt('./simulations_output/'+map_type+'_maps/recov_alm_'+str(j+1)+'.dat', recov_alm.T)
+    np.savetxt('./simulations_output/'+map_type+'_maps/recovCls_'+str(j+1)+'.dat', recovCls.T)
 
 end = time.time()
 print('\nTime taken for execution (seconds): ', end - start)
